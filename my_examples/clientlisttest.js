@@ -1,4 +1,4 @@
-var FreshBooks = require('../');
+var FreshBooks = require('../lib');
 
 
 /* FreshBooks() initiates your connection to the FreshBooks API.
@@ -12,17 +12,17 @@ var api_url = "https://cornerstoneist.freshbooks.com/api/2.1/xml-in"
 var freshbooks = new FreshBooks(api_url, api_token)
   , client = new freshbooks.Client;
 
-var zdRequestorEmail = "armen@bluip.com";
+var zdRequestorEmail = "armen@bluip.com"; //Who requested the ticket? (email)
  
-client.list({"email": zdRequestorEmail}, function(err, clients) {
-//client.list(function(err, clients) { //lists 25 clients 
+//client.list({"email": zdRequestorEmail}, function(err, clients) {
+client.list({"per_page": 100, "email": zdRequestorEmail}, function(err, clients) { //lists up to 100 clients 
   if(err) { //returns if an error has occured, ie invoice_id doesn't exist.
     console.log(err);
 
   } else {
 
      var fbOutput = clients[0];
-     //console.log(fbOutput);
+     console.log(fbOutput);
      console.log('Freshbooks ID : ' + fbOutput.client_id);
      console.log('Email : ' + fbOutput.email);
      console.log('First Name : ' + fbOutput.first_name);

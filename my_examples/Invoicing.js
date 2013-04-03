@@ -1,4 +1,4 @@
-var FreshBooks = require('../');
+var FreshBooks = require('../lib');
 
 
 /* FreshBooks() initiates your connection to the FreshBooks API.
