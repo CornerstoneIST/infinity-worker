@@ -1,40 +1,36 @@
 {
-  "name": "Infinity-Worker",
-  "description": "Node.js wrapper for FreshBooks and Zendesk",
-  "version": "0.0.1",
-  "author": {
-    "name": "John Pogosyan",
-    "email": "jpogosyan@cornerstoneist.com"
+  "name": "node-zendesk",
+  "version": "0.0.4",
+  "description": "zendesk API client wrapper",
+  "keywords": [
+    "zendesk",
+    "API",
+    "support",
+    "supportdesk",
+    "buddha"
+  ],
+  "homepage": "https://github.com/blakmatrix/node-zendesk",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/blakmatrix/node-zendesk.git"
   },
-  "homepage": "https://github.com/Metacrash/freshbooks.js",
+  "main": "./lib/client.js",
+  "scripts": {
+    "test": "node ./test/*-test.js"
+  },
+  "author": {
+    "name": "Farrin Reid",
+    "email": "blakmatrix@gmail.com"
+  },
   "dependencies": {
     "request": "2.14.x",
     "querystring": "0.2.x",
     "async": "0.2.x",
     "flatten": "0.0.x",
-    "nconf": "0.6.x",
-    "libxmljs": "*",
-    "describe": "*"
+    "nconf": "0.6.x"
   },
-  "main": "index",
-  "engines": {
-    "node": ">= 0.6.0"
-  },
-  "devDependencies": {
-    "mocha": "0.3.x"
-  },
-  "scripts": {
-    "test": "make test"
-  },
-  "publishConfig": {
-    "tag": "latest"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/Metacrash/freshbooks.js.git#v0.2.0"
-  },
-  "readme": "#Freshbooks.js\n\nFreshbooks.js is a node.js module providing a wrapper to the [FreshBooks]\n(http://www.freshbooks.com) API.\n\nAll API method are fairly well documented at [FreshBooks Developers]\n(http://developers.freshbooks.com) but if you find a discrepancy between the \ndocs and this wrapper feel free to file an \"Issue\".\n\n## Installation\n\n    $ npm install freshbooks\n        \nNote: This module utilises [libxmljs](https://github.com/polotek/libxmljs). You \nwill need have the **libxml2** library installed and also the **libxml2-devel** \n(**libxml2-dev** on debian systems) package. This comes with the `xml2-config`\nutility that is needed for compiling.  **This command must be in your path.**\n\n## Example\n\n    var FreshBooks = require(\"freshbooks\");\n    \n    var freshbooks = new FreshBooks(api_url, api_token)\n      , invoice = new freshbooks.Invoice();\n\n    invoice.get(invoice_id, function(err, invoice) {\n      if(err) { //returns if an error has occured, ie invoice_id doesn't exist.\n        console.log(err);\n      } else {\n        console.log(\"Invoice Number:\" + invoice.number);\n      }\n    });\n\n## Changelog\n\n**Update 17/10:** ...and version 0.2.0 has landed! We are now using the latest\nversion of libxmljs (currently version 0.6.1). We have also added an \"options\" \nobject to contain invoice_id, subject and message to \n[Estimate,Invoice].sendByEmail, allowing for custom email messages.\n\n**Update 18/8:** Version 0.1.2 has just been pushed. There is now an \"options\" \nobject containing page, per_page, pages and total accessible from list methods.\n\n**Update 14/7:** Just entered version 0.1.1! Most methods now accept an optional\nid first argument (similar to how invoice.get() works). Examples have been \nupdated *and* all tests are passing.\n\n**Update 8/7:** We've just entered version 0.1.0! All required API features are \nnow implemented excluding callback and system.\n\n**Update 5/6:** I've implimented about 75% of the API. Most of the core features \nare working but i'm still working through some minor issues. Tests are working \nnow though!\n\n**Update 4/6:** This project is very much a *WORK IN PROGRESS*. So far I've \nimplimented the majority of the Invoice API and am tidying up the code before \nlaunching into the other APIs. I've also decided\nto take some liberties on some aspects of the API, ie replacing \ninvoice.lines.add/delete/update methods with Array.pop/push, as frankly there \nare better ways to interact with the API in JS than is currently implimented.\n\n## License\n\n(The MIT License)\n\nCopyright (c) 2012 Marc Loney &lt;marc@metacrash.com.au&gt;\n\nPermission is hereby granted, free of charge, to any person obtaininga copy of \nthis software and associated documentation files (the 'Software'), to deal in \nthe Software without restriction, including without limitation the rights to \nuse, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of \nthe Software, and to permit persons to whom the Software is furnished to do so, \nsubject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all \ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR \nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS \nFOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR \nCOPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER \nIN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN \nCONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.\n",
-  "readmeFilename": "README.md",
-  "_id": "freshbooks@0.2.0",
-  "_from": "freshbooks@"
+  "readme": "# node-zendesk\n---\n[![build status](https://secure.travis-ci.org/blakmatrix/node-zendesk.png)](http://travis-ci.org/blakmatrix/node-zendesk)\n\n\n## Example\n\n```js\nvar zendesk = require('node-zendesk'),\n    fs      = require('fs');\n\nvar client = zendesk.createClient({\n  username:  'username',\n  token:     'token',\n  remoteUri: 'https://remote.zendesk.com/api/v2'\n});\n\nclient.users.list(function (err, req, result) {\n  if (err) {\n    console.log(err);\n    return;\n  }\n  console.log(JSON.stringify(result[0], null, 2, true));//gets the first page\n});\n```\nTake a look in the `examples` folder for more examples.\n\n## Install\n\nInstall using npm:\n```bash\nnpm install node-zendesk\n```\n\n## Command Line Options for scripts\n\nBelow is a list of options you may use when calling any scripts you may have written\n\n```\n-s --subdomain X\n-u --username X\n-p --password X\n-t --token X\n-r --remoteUri X\n--debug\n--no-cookies\n--timeout X(ms)\n--proxy X\n--encoding X\n```\n\nThey are fairly self-explanatory no-cookies, timeout, proxy, encoding are all options to request. if using debug its reccomended you use `--encoding utf8` or something similar as all you will see is a buffer otherwise in the response.\n\nBecause of these command line options you can try a few already from the examples section:\n\n```bash\nnode examples/users-list.js -u <username> -t <token> -s <subdomain>\nnode examples/check-auth.js -u <username> -p <password> -s <subdomain>\nnode examples/check-auth-token.js -u <username> -t <token> -s <subdomain>\nnode examples/users-list.js -u <username> -t <token> -s <subdomain>\n```\n\n## client\n\n\n```js\nrequest(method, uri)\nrequestAll(method, uri) //pulls back multiple pages\nrequestUpload(uri, file, fileToken, callback)\n```\n\n## Methods\n\n### accountsettings\n\n```js\nshow(cb)\n```\n\n### activitystream\n\n```js\nshow(activityID, cb)\nlist(cb)\n```\n\n### attachments\n\n```js\nupload(file, fileToken, cb)\n```\n\n### categories\n\n```js\nlist(cb)\nshow(categoryID, cb)\ncreate(category, cb)\nupdate(categoryID, category, cb)\ndelete(categoryID, cb)\n```\n\n### customagentroles\n\n```js\nlist(cb)\n```\n\n### forums\n\n```js\nlist(cb)\nlistByCategory(categoryID, cb)\nshow(forumID, cb)\ncreate(forum, cb)\nupdate(forumID, forum, cb)\ndelete(forumID, cb)\n```\n\n### forumsubscriptions\n\n```js\nlist(cb)\nlistByForum(forumID, cb)\nshow(forumSubscriptionID, cb)\ncreate(forumSubscription, cb)\ndelete(forumSubscriptionID, cb)\n```\n\n### groupmemberships\n\n```js\nlist(cb)\nlistByUser(userID, cb)\nlistByGroup(groupID, cb)\nshow(groupMembershipID, cb)\nshowByUser(userID, groupMembershipID, cb)\ncreate(groupMembership, cb)\ncreateByUser(userID, groupMembership, cb)\ndelete(groupMembershipID, cb)\ndeleteByUser(userID, groupMembershipID, cb)\nmakeDefault(userID, groupMembershipID, cb)\n```\n\n### groups\n\n```js\nlist(cb)\nassignable(cb)\nshow(groupID, cb)\ncreate(group, cb)\nupdate(groupID, group, cb)\ndelete(groupID, cb)\n```\n\n### jobstatuses\n\n```js\nshow(jobStatusID, cb)\nwatch(jobStatusID, interval, maxAttempts, cb)\n```\n\n### locales\n\n```js\nlist(cb)\nshow(localeID, cb)\nshowCurrent(cb)\ncurrent(cb)\n```\n\n### macros\n\n```js\nlist(cb)\napply(macroID, cb)\napplyTicket(ticketID, macroID, cb)\n```\n\n### organizations\n\n```js\nlist(cb)\nshow(organizationID, cb)\ncreate(organization, cb)\nupdate(organizationID, organization, cb)\ndelete(organizationID, cb)\n```\n\n### satisfactionratings\n\n```js\nlist(cb)\nreceived(cb)\nshow(satisfactionRatingID, cb)\n```\n\n### search\n\n```js\nquery(searchTerm, cb)\nqueryAll(searchTerm, cb)\nqueryAnonymous (searchTerm, cb)\nqueryAnonymousAll (searchTerm, cb)\n```\n\n### suspendedtickets\n\n```js\nlist(cb)\nshow(suspendedTicketID, cb)\nrecover(suspendedTicketID, cb)\nrecoverMany(suspendedTicketIDs, cb)\ndelete(suspendedTicketID, cb)\ndestroyMany(suspendedTicketIDs, cb)\ndeleteMany(suspendedTicketIDs, cb)\n```\n\n### tags\n\n```js\nlist(cb)\n```\n\n### ticketaudits\n\n```js\nlist(ticketID, cb)\n```\n\n### ticketfields\n\n```js\nlist(cb)\nshow(ticketFieldID, cb)\ncreate(ticketField, cb)\nupdate(ticketFieldID, ticketField, cb)\ndelete(ticketFieldID, cb)\n```\n\n### tickets\n\n```js\nlist(cb)\nlistByOrganization(orgID, cb)\nlistByUserRequested(userID, cb)\nlistByUserCCD(userID, cb)    // email cc\nlistRecent(cb)\nlistCollaborators(ticketID, cb)\nlistIncidents(ticketID, cb)\nshow(ticketID, cb)\ncreate(ticket, cb)\nupdate(ticketID, ticket, cb)\nupdateMany(ticket_ids, ticket, cb)\ndelete(ticketID, cb)\nexport(startTime, cb)        //1000 per page export\nexportSample(startTime, cb)  //Ticket Export Sample (max 50 tickets per request)\nexportAudit(ticketID, cb)    //Listing Audits\n```\n\n### topiccomments\n\n```js\nlist(topicID, cb)\nlistByUser(userID, cb)\nshow(topicID, commentID, cb)\nshowByUser(userID, commentID, cb)\ncreate(topicID, comment, cb)\nupdate(topicID, commentID, comment, cb)\ndelete(topicID, commentID, cb)\n```\n\n### topics\n\n```js\nlist(cb)\nlistByForum(forumID, cb)\nlistByUser(userID, cb)\nshow(topicID, cb)\nshowMany(topicIDs, cb)\ncreate(topic, cb)\nupdate(topicID, topic, cb)\ndelete(topicID, cb)\n```\n\n### topicsubscriptions\n\n```js\nlist(cb)\nlistByTopic(topicID, cb)\nshow(topicSubscriptionsID, cb)\ncreate(topicSubscription, cb)\ndelete(topicSubscriptionsID, cb)\n```\n\n### topicvotes\n\n```js\nlist(topicID, cb)\nlistByUser(userID, cb)\nshow(topicID, cb)\ncreate(topicID, vote, cb)\ndelete(topicID, cb)\n```\n\n### useridentities\n\n```js\nlist(userID, cb)\nshow(userID, userIDentityID, cb)\ncreate(userID, userIDentity, cb)\nupdate(userID, userIDentityID, cb)\nmakePrimary(userID, userIDentityID,  cb)\nverify(userID, userIDentityID, cb)\nrequestVerification(userID, userIDentityID, cb)\nunsuspend(userId, cb)\ndelete(userID, userIDentityID, cb)\n```\n\n### users\n\n```js\nauth(cb) //also me()\nlist(cb)\nlistByGroup(id, cb)\nlistByOrganization(id, cb)\nshow(id, cb)\ncreate(user, cb)\ncreateMany(users, cb)\nupdate(id, user, cb)\nsuspend(id, cb)\ndelete(id, cb)\nsearch(params, cb)\nme(cb)\n```\n\n### views\n\n```js\nlist(cb)\nlistActive(cb)\nlistCompact(cb)\nshow(viewID, cb)\ncreate(view, cb)\nupdate(viewID, cb)\nexecute(viewID, params, cb)\ntickets(viewID, cb)\npreview(params, cb)\nshowCount(viewID, cb)\nshowCounts(viewIDs, cb)\nexport(viewID, cb)\n```\n\n\n## Tests\n\nToDO\n\n## License\n\nMIT.\n",
+  "readmeFilename": "ReadMe.md",
+  "_id": "node-zendesk@0.0.4",
+  "_from": "node-zendesk@"
 }
