@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>  
+<request method="project.create">  
+  <project>  
+    <name>{{name}}</name>  
+    <bill_method>{{bill_method}}</bill_method>  
+    <client_id>{{client_id}}</client_id>  
+    <rate>{{rate}}</rate>  
+    <description>{{description}}</description>  
+    <tasks>  
+          <task>  
+            <task_id>{{task_id }}</task_id>  
+          </task>  
+    </tasks>  
+  </project>  
+</request>

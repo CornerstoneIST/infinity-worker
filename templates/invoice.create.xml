@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<request method="invoice.create">
+  <invoice>
+    <status>draft</status>
+    <notes>{{notes}}</notes>
+    <currency_code>CAD</currency_code>
+    <language>en</language>
+    <terms>Please note that booking process is done after the deposit is paid.</terms>
+    <client_id>{{client_id}}</client_id>
+    <lines>   
+      <line>
+        <name>NestMob Service Fee</name>  
+        <description>Good services.</description>
+        <unit_cost>{{unit_cost}}</unit_cost>
+        <quantity>1</quantity>
+        <tax1_name>{{tax1_name}}</tax1_name>
+        <tax1_percent>{{tax1_percent}}</tax1_percent>
+      </line>
+    </lines>
+  </invoice>
+</request>

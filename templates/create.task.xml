@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>  
+<request method="task.create">  
+  <task>  
+    <name>{{name_id}}</name>     
+    <billable>1</billable>      
+    <rate>{{rate}}</rate>         
+    <description>{{description}}</description>  
+  </task>  
+</request>  
