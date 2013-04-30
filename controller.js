@@ -60,16 +60,13 @@ module.exports = {
 		fb.projectList(data,function(xml){
 			
 			parser.parseString(xml, function (err, result) {
-				console.log(result['response']['projects'])
 			 var total = parseInt(result['response']['projects'][0]['$']['total']);
 			 
-			 console.log(total)
-			 
 				if(total == 0){
-					console.log(checkData)
+					console.log('new')
 					fb.createProject(data,function(xml){})
 				}else{
-
+					console.log('update')
 					var projectID = parseInt(result['response']['projects'][0]['project'][0]['project_id']);
 						data['project_id'] = projectID;
 					 	fb.projectUpdate(data,function(xml){})
@@ -78,22 +75,6 @@ module.exports = {
 			})
 
 		})
-
-		//console.log(total);
-			/*if(total == 0){
-				console.log(checkData)
-				fb.createProject(data,function(xml){})
-			}
-			else{
-				fb.projectList(data,function(xml){
-					parser.parseString(xml, function (err, result) {
-						console.log(result['response']['projects'][0]['project']);
-						var projectID = parseInt(result['response']['projects'][0]['project'][0]['project_id']);
-						data['project_id'] = projectID;
-					 	fb.projectUpdate(data,function(xml){})
-					})
-				})
-			}*/
 			
 		})
 	},
