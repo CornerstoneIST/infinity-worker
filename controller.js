@@ -115,7 +115,7 @@ module.exports = {
 	},
 
 	_updateTask:function(data, cb){
-		console.log(data)
+		//console.log(data)
 		fb.taskUpdate(data,function(xml){
 			parser.parseString(xml, function (err, result) {
 			    cb(result);
