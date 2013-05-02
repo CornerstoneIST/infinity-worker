@@ -1,10 +1,10 @@
 var fb = require('./fb.js'),
-fs = require('fs'),
+	config = require('./config.js'),
+	fs = require('fs'),
 	xml2js = require('xml2js');
 
-	fb.init('cornerstoneistsandbox.freshbooks.com','9936916e20a4f05e4a81889b235ccce9');
 var parser = new xml2js.Parser();
-
+fb.init(config.fb.host, config.fb.token);
 
 module.exports = {
 
@@ -24,7 +24,7 @@ module.exports = {
 							createNewClient = false;
 							clientID = parseInt(clients[i]['client_id'][0]);
 							project['client_id'] = clientID;
-							self.checkProjectExists(project)
+							self._checkProjectExists(project)
 							
 						}
 							
@@ -32,10 +32,10 @@ module.exports = {
 			   }
 			   
 			   if(total == 0 || createNewClient){
-			   		self.createNewClient(data,function(newClient){
+			   		self._createNewClient(data,function(newClient){
 			   			clientID = parseInt(newClient['response']['client_id'][0]);
 			   			project['client_id'] = clientID;
-			   			self.checkProjectExists(project)
+			   			self._checkProjectExists(project)
 
 			   		})
 			   }
@@ -44,7 +44,7 @@ module.exports = {
 		})
 	},
 	
-	createNewClient : function(data,cb){
+	_createNewClient : function(data,cb){
 		fb.createClient(data,function(xml){
 			parser.parseString(xml, function (err, result) {
 			    cb(result);
@@ -54,9 +54,9 @@ module.exports = {
 
 	},
 
-	checkProjectExists:function(data){
+	_checkProjectExists:function(data){
 		var self = this; 
-		self.checkTaskExists(data,function(checkData,status){
+		self._checkTaskExists(data,function(checkData){
 		fb.projectList(data,function(xml){
 			
 			parser.parseString(xml, function (err, result) {
@@ -79,7 +79,7 @@ module.exports = {
 		})
 	},
 	
-	checkTaskExists:function(data,cb){
+	_checkTaskExists:function(data,cb){
 		var self = this; 
 		var newTask = true;
 		fb.taskList(data,function(xml){
@@ -90,25 +90,32 @@ module.exports = {
 			   	 var tasks = result['response']['tasks'][0]['task'];
 
 				   	for(var i = 0; i < total; i++){
-				   		if(parseInt(tasks[i]['name']) == data.name_id){
+
+				   		var taskName = '' + tasks[i]['name'];
+				   		var taskID = taskName.substring(taskName.indexOf('#')+1,taskName.length);
+				   		var dataID =  data['name_id'].substring( data['name_id'].indexOf('#')+1, data['name_id'].length);
+
+				   		if(taskID == dataID){
 				   			newTask =false;
-				   			data['task_id'] = parseInt(tasks[i]['task_id'])
-				   			self.updateTask(data,function(updateTaskDate){
-				   				cb(data, 'update');
+				   			data['task_id'] = parseInt(tasks[i]['task_id']);
+				   			console.log(data.name_id)
+				   			self._updateTask(data,function(updateTaskDate){
+				   				cb(data);
 				   			})
 				   		}
 				   	}
 			   }
 			   if(total == 0 || newTask)
-			   	self.createNewTask(data,function(newTaskID){
+			   	self._createNewTask(data,function(newTaskID){
 			   		data['task_id'] = parseInt(newTaskID)
-			   		cb(data, 'new');
+			   		cb(data);
 			   	})
 			})
 		})
 	},
 
-	updateTask:function(data, cb){
+	_updateTask:function(data, cb){
+		console.log(data)
 		fb.taskUpdate(data,function(xml){
 			parser.parseString(xml, function (err, result) {
 			    cb(result);
@@ -116,9 +123,10 @@ module.exports = {
 		})
 	},
 
-	createNewTask:function(data, cb){
+	_createNewTask:function(data, cb){
 		fb.createTask(data,function(xml){
 			parser.parseString(xml, function (err, result) {
+				console.log(result);
 			   cb(result['response']['task_id'][0]);
 			})
 		})

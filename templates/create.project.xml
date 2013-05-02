@@ -8,7 +8,7 @@
     <description>{{description}}</description>  
     <tasks>  
           <task>  
-            <task_id>{{task_id }}</task_id>  
+            <task_id>{{task_id}}</task_id>  
           </task>  
     </tasks>  
   </project>  
