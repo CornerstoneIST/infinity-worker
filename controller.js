@@ -1,5 +1,5 @@
-var fb = require('../../fb.js'),
-	config = require('../../config.js'),
+var fb = require('./fb.js'),
+	config = require('./config/config.js'),
 	fs = require('fs'),
 	xml2js = require('xml2js');
 
@@ -96,7 +96,6 @@ module.exports = {
 				   		var dataID =  data['name_id'].substring( data['name_id'].indexOf('#')+1, data['name_id'].length);
 
 				   		if(taskID == dataID){
-
 				   			newTask =false;
 				   			data['task_id'] = parseInt(tasks[i]['task_id']);
 				   			self._updateTask(data,function(updateTaskDate){

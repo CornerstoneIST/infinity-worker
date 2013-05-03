@@ -1,7 +1,7 @@
 var zd = require('../zd-lib/client')
-  ,	controller = require('../public/javascript/controller.js')
-  ,	rate = require('../public/javascript/rate.js')
-  , config = require('../config.js');
+  ,	controller = require('../controller.js')
+  ,	rate = require('../rate.js')
+  , config = require('../config/config.js');
 
 var client = zd.createClient({
   username:  config.zd.username,
