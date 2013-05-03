@@ -1,5 +1,5 @@
-var fb = require('./fb.js'),
-	config = require('./config.js'),
+var fb = require('../../fb.js'),
+	config = require('../../config.js'),
 	fs = require('fs'),
 	xml2js = require('xml2js');
 
@@ -96,9 +96,9 @@ module.exports = {
 				   		var dataID =  data['name_id'].substring( data['name_id'].indexOf('#')+1, data['name_id'].length);
 
 				   		if(taskID == dataID){
+
 				   			newTask =false;
 				   			data['task_id'] = parseInt(tasks[i]['task_id']);
-				   			console.log(data.name_id)
 				   			self._updateTask(data,function(updateTaskDate){
 				   				cb(data);
 				   			})
@@ -115,7 +115,6 @@ module.exports = {
 	},
 
 	_updateTask:function(data, cb){
-		console.log(data)
 		fb.taskUpdate(data,function(xml){
 			parser.parseString(xml, function (err, result) {
 			    cb(result);
@@ -126,7 +125,6 @@ module.exports = {
 	_createNewTask:function(data, cb){
 		fb.createTask(data,function(xml){
 			parser.parseString(xml, function (err, result) {
-				console.log(result);
 			   cb(result['response']['task_id'][0]);
 			})
 		})
