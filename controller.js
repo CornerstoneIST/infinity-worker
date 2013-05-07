@@ -1,12 +1,13 @@
-var fb = require('./fb.js'),
-	config = require('./config/config.js'),
-	fs = require('fs'),
-	xml2js = require('xml2js');
+var fb = require('./fb.js')
+  ,	fs = require('fs')
+  ,	xml2js = require('xml2js');
 
 var parser = new xml2js.Parser();
-fb.init(config.fb.host, config.fb.token);
 
 module.exports = {
+	fbInit:function(data){
+		fb.init(data.host, data.token);
+	},
 
 	createTask: function(data, project){
 		var self = this;
