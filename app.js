@@ -24,7 +24,7 @@ var dbData ={
 }
 
 var events = require('./routes/events.js');
-//events.insertData(dbData);
+events.insertData(dbData);
 //events.removeData();
 //events.showData();
 
