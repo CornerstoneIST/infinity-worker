@@ -1,7 +1,8 @@
 module.exports = {
 	development: {
-		db: 'mongodb://localhost/zendesk',
-
+		//http://195.250.88.93:8081/ticketchanged?id={{ticket.id}}&status={{ticket.status}}
+		//db: 'mongodb://localhost/zendesk',
+db: 'mongodb://heroku_app14220631:sa8fb17r1tvvijse1atvnrasbl@ds063177.mongolab.com:63177/heroku_app14220631',
 		zd: {
 			subdomain: 'cornerstoneistsandbox',
 		    username: 'harut.muradyan@simplytech.co',
@@ -14,8 +15,8 @@ module.exports = {
 		}
 	},
 	production: {
-		db: 'mongodb://localhost/zendesk',
-		
+		//db: 'mongodb://localhost/zendesk',
+		db: 'mongodb://heroku_app14220631:sa8fb17r1tvvijse1atvnrasbl@ds063177.mongolab.com:63177/heroku_app14220631',
 		zd: {
 			subdomain: 'cornerstoneistsandbox',
 		    username: 'harut.muradyan@simplytech.co',

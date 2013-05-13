@@ -26,7 +26,7 @@ var dbData ={
 var events = require('./routes/events.js');
 //events.insertData(dbData);
 //events.removeData();
-events.showData();
+//events.showData();
 
 var ticketchanged = require('./routes/ticketchanged.js')
 app.get('/ticketchanged', ticketchanged.ticketHandle);
