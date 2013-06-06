@@ -3,15 +3,14 @@ var mongoose = require('mongoose')
 
 module.exports = {
 	insertData: function(data){
-		console.log(data)
-
 			var user2Task = new User2Task({
 				userName: data.userName,
 				user:[{
 					zd:  data.zd,
 					fb:  data.fb,
 				}],
-				tasks:data.tasks
+				fields: data.fields,
+				tasks: data.tasks
 			})
 			user2Task.save(function(err){
 				if (err) 
@@ -35,6 +34,30 @@ module.exports = {
 				console.log(err.message);
 			else
 				console.log(user2Task);
+		})
+	},
+
+	updateData: function(data){
+		User2Task.findOne({userName : data.userName},function (err, doc) {
+			
+			 if (err) 
+				console.log(err.message);
+			else
+				if(doc.length>0 ){
+
+					doc.userName = data.userName;
+					doc.user = [{zd:  data.zd, fb:  data.fb}];
+					doc.fields = data.fields;
+					doc.tasks = data.tasks;
+					
+					doc.save(function(err){
+					if (err) 
+						console.log(err.message);
+					else
+	  					console.log('Success!');
+					})
+				}
+				
 		})
 	},
 

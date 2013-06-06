@@ -17,7 +17,7 @@ module.exports = {
 				var createNewClient = true;
 				var clientID = 0;
 				var total = result['response']['clients'][0]['$']['total'];
-		
+	
 			   if(total>0){
 					var clients = result['response']['clients'][0]['client'];
 					for(var i = 0; i < total; i++){
@@ -62,7 +62,6 @@ module.exports = {
 			
 			parser.parseString(xml, function (err, result) {
 			 var total = parseInt(result['response']['projects'][0]['$']['total']);
-			 
 				if(total == 0){
 					console.log('new')
 					fb.createProject(data,function(xml){})
@@ -125,6 +124,7 @@ module.exports = {
 	_createNewTask:function(data, cb){
 		fb.createTask(data,function(xml){
 			parser.parseString(xml, function (err, result) {
+				console.log(result)
 			   cb(result['response']['task_id'][0]);
 			})
 		})

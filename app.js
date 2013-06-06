@@ -1,5 +1,4 @@
-var tasks = require('./tasks.js')
-  , http = require('http')
+var  http = require('http')
   ,	express = require('express');
 
 // Load configurations
@@ -16,20 +15,12 @@ app.configure(function(){
 	app.set('port', process.env.PORT || 8081);
 })
 
-var dbData ={
-	userName : 'harut.muradyan@simplytech.co',
-	zd: config.zd,
-	fb: config.fb,
-	tasks: tasks.newTasks
-}
-
-var events = require('./routes/events.js');
-//events.insertData(dbData);
-//events.removeData();
-//events.showData();
+var user = require('./routes/user.js')
+app.get('/createNewUser', user.userHandle);
 
 var ticketchanged = require('./routes/ticketchanged.js')
 app.get('/ticketchanged', ticketchanged.ticketHandle);
+
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));

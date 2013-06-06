@@ -1,8 +1,10 @@
 module.exports = {
 	development: {
 		//http://195.250.88.93:8081/ticketchanged?id={{ticket.id}}&status={{ticket.status}}
+		//http://infinity-worker.herokuapp.com/ticketchanged?id={{ticket.id}}&status={{ticket.status}}
 		//db: 'mongodb://localhost/zendesk',
-db: 'mongodb://heroku_app14220631:sa8fb17r1tvvijse1atvnrasbl@ds063177.mongolab.com:63177/heroku_app14220631',
+
+		db: 'mongodb://heroku_app14220631:sa8fb17r1tvvijse1atvnrasbl@ds063177.mongolab.com:63177/heroku_app14220631',
 		zd: {
 			subdomain: 'cornerstoneistsandbox',
 		    username: 'harut.muradyan@simplytech.co',

@@ -5,12 +5,14 @@ var zd = require('../zd-lib/client')
 module.exports ={
 
 	ticketHandle:function(req,res){
+		var tiketData = req.query;
 
-		events.findData( 'harut.muradyan@simplytech.co',function(userData){
+		events.findData( tiketData['userEmail'],function(userData){
 			
 			var zdData = userData[0].user[0].zd;
 			var fbData = userData[0].user[0].fb;
 			var tasks = userData[0].tasks;
+			var fields = userData[0].fields;
 			controller.fbInit(fbData);
 
 			var client = zd.createClient({
@@ -22,17 +24,17 @@ module.exports ={
 			var newClent = {},
 				project = {};
 
+
 			var id = req.query['id'],
 	  		  status = req.query['status'];
 
 			    client.tickets.show(id,function(err, req, result){
-
 					 if (err) {
 					    console.log(err);
 					    return;
 					  }
 
-					 if(result.assignee_id){
+					 if(result.assignee_id || req.query['assignee_id']){
 
 					 	var taskName = '';
 					 	var  contractRate = 0;
@@ -40,6 +42,16 @@ module.exports ={
 						var taskType = '';
 						var customeContractRate = 0;
 						var toggleBreak = false;
+				
+						var customFields = tiketData['custom_fields'].split(' ');
+						for(var i=1; i< customFields.length; i++){
+							for(var j = 0; j < result.custom_fields.length; j++ ){
+								if(customFields[i].indexOf(result.custom_fields[j].id) != -1){
+									result.custom_fields[j].value = customFields[i+1]
+									
+								}
+							}
+						}
 
 					 	for(var i = 0 ; i < result.custom_fields.length; i++){
 					 		if(toggleBreak)
@@ -59,16 +71,17 @@ module.exports ={
 					 						taskName =  tasks[j]['name'];
 					 					}
 										else {
+										
 											taskName += taskName? ' - ' + tasks[j]['name'] : tasks[j]['name'];
 											contractRate += parseInt(tasks[j]['rate'])
 										}
-										
 					 				}
 					 				else customeContractRate = result.custom_fields[i]['value'];
 
 					 			}
 					 		}
 					 	}
+					 	
 					 	if(taskType == 'reset')
 					 		contractRate = 0;
 					 	if(taskType == 'custom')
@@ -81,12 +94,11 @@ module.exports ={
 							getClient( result.requester_id, function(){
 								
 									taskName = taskName.length > 42 ? taskName.substring(0,42) + '...#'+id : taskName + ' #' + id ;
-									project['name'] = 'TICKET '+ id +' - ' + result.subject;
-									project['description'] =  result.description;
+									project['name'] = 'TICKET '+ id +' - ' + tiketData['subject'] ;
+									project['description'] = tiketData['description'] ;
 									project['bill_method'] =  contractType;
 									project['rate'] =  contractRate;
 									project['name_id'] = taskName;
-									
 									controller.createTask(newClent,project);
 
 							})

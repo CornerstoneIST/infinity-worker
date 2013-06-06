@@ -7,6 +7,13 @@ var taskSchema = new Schema({
 	rate: String,
 	type: {type: String, enum: ['combine', 'custom', 'reset']},
 	contractType: String,
+	parent: String
+});
+
+var fieldsSchama = new Schema({
+	name: {type:String, required:true},
+	tagName: {type:String, required:true},
+	type: {type: String, enum: ['input', 'list']},
 });
 
 var userSchema = new Schema({
@@ -25,6 +32,7 @@ var userSchema = new Schema({
 var User2TaskSchema = new Schema({
 	userName : {type:String, required:true},
 	user: [userSchema],
+	fields: [fieldsSchama],
 	tasks: [taskSchema],
 	 //User created timestamp
     userTS: Date,
