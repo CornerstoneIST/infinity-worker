@@ -32,7 +32,8 @@ module.exports ={
 					if (err) 
 						console.log(err.message);
 					else{
-						console.log('Success!');
+						console.log('Update!!');
+						//createTiketFields(dbData);
 					}
 	  					
 				})
@@ -40,11 +41,13 @@ module.exports ={
 			else{
 				events.insertData(dbData);
 				createTiketFields(dbData);
+				console.log('newUser!');
 			}
 				
 		});
 
 		 function createTiketFields(){
+		 	//console.log(dbData);
 			var client = zd.createClient({
 			  username:  dbData.zd.username,
 			  token:     dbData.zd.token,
@@ -76,14 +79,13 @@ module.exports ={
 		  	}
 
 		  	var i = 0;
+
 		  	function createField(){
 	  			var data = newfields;
 	  			client.ticketfields.create(data[i],function(err,req,result){
-	  				console.log(i)
 					if(err) console.log(err)
 						else{
 							if(data.length > i){
-								console.log(result)
 								createField();
 								i++;
 							}

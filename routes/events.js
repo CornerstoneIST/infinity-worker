@@ -1,5 +1,6 @@
 var mongoose = require('mongoose')
-   , User2Task = mongoose.model("User2Task");
+   , User2Task = mongoose.model("User2Task")
+   , Project2Time = mongoose.model("Project2Time");
 
 module.exports = {
 	insertData: function(data){
@@ -68,5 +69,42 @@ module.exports = {
 			else
 				cb(userData);
 		})
-	} 
+	},
+
+	insertTimeEntry:function(data){
+		console.log('okkkk');
+		
+	},
+
+	timeEntry:function(data){
+		console.log(data);
+		console.log('aaaaaaaaaaaaa');
+		Project2Time.findOne({id : data.task_id},function (err, doc) {
+			
+			if (err) 
+				console.log(err.message);
+			else
+			if(doc){
+				console.log(doc);
+			}
+			else{
+				
+				var project2Time = new Project2Time({
+					taskID : data.task_id,
+					timeEntry:[{id:data.time_entry_id, notes : data.woekDescription, hour:data.hours }]
+				})
+
+				project2Time.save(function(err){
+					if (err) 
+						console.log(err.message);
+					else
+	  					console.log('Success insert!');
+				})
+				console.log('insertNewData')
+			}
+				
+		})
+	}
+
+	
 }

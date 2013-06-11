@@ -23,6 +23,9 @@ var PROJECT_UPDATE_TEMPLATE = fs.readFileSync('templates/project.update.xml', 'u
 var TASK_LIST_TEMPLATE = fs.readFileSync('templates/task.list.xml', 'utf-8');
 var TASK_TEMPLATE = fs.readFileSync('templates/create.task.xml', 'utf-8');
 var TASK_UPDATE_TEMPLATE = fs.readFileSync('templates/task.update.xml', 'utf-8');
+var TIME_ENTRY_TEMPLATE = fs.readFileSync('templates/time.entry.xml', 'utf-8');
+var TIME_ENTRY_LIST_TEMPLATE = fs.readFileSync('templates/time.entry.list.xml', 'utf-8');
+
 
 module.exports = {
 
@@ -67,6 +70,14 @@ module.exports = {
 	taskUpdate : function(data, next){
 		var _task_update = hogan.compile(TASK_UPDATE_TEMPLATE).render(data);
 		this.postFreshbook(_task_update, next);
+	},
+	createTimeEntry : function(data, next){
+		var _time_entry = hogan.compile(TIME_ENTRY_TEMPLATE).render(data);
+		this.postFreshbook(_time_entry, next);
+	},
+	timeEntryList : function(data, next){
+		var _time_entry_list = hogan.compile(TIME_ENTRY_LIST_TEMPLATE).render(data);
+		this.postFreshbook(_time_entry_list, next);
 	},
 	postFreshbook : function(xml, next){
 		if (HEADER.host == "" || HEADER.auth == ":X"){
