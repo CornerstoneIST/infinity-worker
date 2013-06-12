@@ -1,5 +1,6 @@
 var  http = require('http')
   ,	express = require('express');
+ // , events = require('./routes/events.js');
 
 // Load configurations
 console.log("[INFO] Reading configurations");
@@ -20,7 +21,8 @@ app.get('/createNewUser', user.userHandle);
 
 var ticketchanged = require('./routes/ticketchanged.js')
 app.get('/ticketchanged', ticketchanged.ticketHandle);
-
+var timeEntry = require('./routes/timeEntry.js')
+app.get('/timeEntry', timeEntry.showTimeEnty);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));

@@ -103,6 +103,7 @@ module.exports ={
 									project['name_id'] = taskName;
 									project['hours'] = hours;
 									project['workDescription'] = workDescription;
+									project['id'] = id;
 									controller.createTask(newClent,project);
 
 							})

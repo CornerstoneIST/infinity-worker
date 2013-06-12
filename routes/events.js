@@ -71,36 +71,42 @@ module.exports = {
 		})
 	},
 
-	insertTimeEntry:function(data){
-		console.log('okkkk');
-		
+	showTimeEnty:function(data,cb){
+		Project2Time.findOne({taskID : data.task_id},function (err, doc) {
+			if(err) console.log(err);
+			else
+				cb(doc)
+		})
 	},
 
-	timeEntry:function(data){
-		console.log(data);
-		console.log('aaaaaaaaaaaaa');
-		Project2Time.findOne({id : data.task_id},function (err, doc) {
-			
+	insertTimeEntry:function(data){
+		Project2Time.findOne({taskID : data.ID},function (err, doc) {
 			if (err) 
 				console.log(err.message);
 			else
 			if(doc){
-				console.log(doc);
-			}
-			else{
-				
-				var project2Time = new Project2Time({
-					taskID : data.task_id,
-					timeEntry:[{id:data.time_entry_id, notes : data.woekDescription, hour:data.hours }]
-				})
-
-				project2Time.save(function(err){
+				doc.timeEntry.unshift({id:data.time_entry_id, notes: data.workDescription, hour:data.hours})
+				doc.save(function(err,res){
 					if (err) 
 						console.log(err.message);
 					else
-	  					console.log('Success insert!');
+	  					console.log('timeEntry update!');
+					})
+			}
+			else{
+
+				var project2Time = new Project2Time({
+					taskID : data.ID,
+					timeEntry:[{id:data.time_entry_id, notes : data.workDescription, hour:data.hours }]
 				})
-				console.log('insertNewData')
+
+				project2Time.save(function(err,res){
+					if (err) 
+						console.log(err.message);
+					else
+	  					console.log('timEntry save!');
+				})
+				
 			}
 				
 		})

@@ -30,6 +30,7 @@ module.exports = {
 							self._checkProjectExists(project,function(projData){
 								projData['hours'] = project.hours;
 								projData['workDescription'] = project.workDescription;
+								projData['ID'] = project.id;
 								self._timeEntry(projData);
 							})
 							
@@ -152,11 +153,12 @@ module.exports = {
 			parser.parseString(xml, function (err, result) {
 				if(err) console.log(err);
 				else
-					{
-						var time_entry_id = result.response.time_entry_id[0];
-						data.time_entry_id = time_entry_id;
-						console.log(data);
-						//events.timeEntry(data);
+					{	if(result){
+							var time_entry_id = result.response.time_entry_id[0];
+							data.time_entry_id = time_entry_id;
+							events.insertTimeEntry(data);
+						}
+						
 					}
 			})
 		})
