@@ -10,5 +10,17 @@ var mongoose = require('mongoose')
 	updated: {type: Date, default: Date.now},	
 	created: {type: Date, default: Date.now},
 })
+ mongoose.model('Project2Time', Project2TimeSchema);
 
-  mongoose.model('Project2Time', Project2TimeSchema);
+  var AutoTimeEntrySchema = new Schema({
+
+  	taskID : {type:String},
+  	notes : {type:String},
+  	startTime:{type:String},
+  	
+  	updated: {type: Date, default: Date.now},	
+  	created: {type: Date, default: Date.now},
+
+  })
+
+ mongoose.model('AutoTimeEntry', AutoTimeEntrySchema);

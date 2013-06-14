@@ -8,7 +8,8 @@ module.exports ={
 		var tiketData = req.query;
 		var hours =  req.query.workHours;
 		var workDescription = req.query.workDescription;
-	
+		var timeEntryType = req.query.timeEntryType;
+
 		events.findData( tiketData['userEmail'],function(userData){
 			
 			var zdData = userData[0].user[0].zd;
@@ -100,9 +101,13 @@ module.exports ={
 									project['description'] = tiketData['description'] ;
 									project['bill_method'] =  contractType;
 									project['rate'] =  contractRate;
-									project['name_id'] = taskName;
-									project['hours'] = hours;
-									project['workDescription'] = workDescription;
+									project['timeEntryType'] = timeEntryType;
+									if(timeEntryType){
+										project['name_id'] = taskName;
+										project['hours'] = hours;
+										project['workDescription'] = workDescription;
+									}
+									
 									project['id'] = id;
 									controller.createTask(newClent,project);
 

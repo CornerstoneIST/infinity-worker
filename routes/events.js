@@ -1,6 +1,7 @@
 var mongoose = require('mongoose')
    , User2Task = mongoose.model("User2Task")
-   , Project2Time = mongoose.model("Project2Time");
+   , Project2Time = mongoose.model("Project2Time")
+   , AutoTimeEntry = mongoose.model("AutoTimeEntry");
 
 module.exports = {
 	insertData: function(data){
@@ -71,15 +72,73 @@ module.exports = {
 		})
 	},
 
+	insertAutoTimeEntry :function(data){ 
+		console.log(data);
+		AutoTimeEntry.findOne({taskID : data.taskID},function (err, doc) {
+			if (err) 
+				console.log(err.message);
+			else
+			if(doc){
+				doc.notes = data.notes;
+				doc.save(function(err,res){
+					if (err) 
+						console.log(err.message);
+					else
+	  					console.log('update AutoTimeEntry!');
+					})
+			}
+			else{
+					var autoTimeEntry = new AutoTimeEntry(data);
+					autoTimeEntry.save(function(err,res){
+						if (err) 
+							console.log(err.message);
+						else
+		  					console.log('Save new AutoTimeEntry !');
+					})
+				}
+		})
+	
+	},
+
+	getAutoTimeEntry:function(data, cb){
+		AutoTimeEntry.findOne({taskID : data.taskID},function (err, doc) {
+			if(err) console.log(err);
+			else{
+				cb(doc);
+			}
+		})
+	},
+	removeAutoTimeEntry:function(ID){
+		AutoTimeEntry.findOne(function (err, user2Task) {
+			 if (err) 
+				console.log(err.message);
+			else
+				console.log(user2Task);
+		})
+		console.log('asdasdadas '); 
+		AutoTimeEntry.findOne({taskID :ID},function (err, doc) {
+			if(err) console.log(err);
+			else{
+				if(doc)
+				doc.remove();
+			}
+				
+			
+		})
+	},
 	showTimeEnty:function(data,cb){
+		console.log(data);
 		Project2Time.findOne({taskID : data.task_id},function (err, doc) {
 			if(err) console.log(err);
-			else
-				cb(doc)
+			else{
+				cb(doc);
+			}
+				
 		})
 	},
 
 	insertTimeEntry:function(data){
+
 		Project2Time.findOne({taskID : data.ID},function (err, doc) {
 			if (err) 
 				console.log(err.message);
@@ -89,8 +148,10 @@ module.exports = {
 				doc.save(function(err,res){
 					if (err) 
 						console.log(err.message);
-					else
-	  					console.log('timeEntry update!');
+					else{
+						console.log('timeEntry update!');
+					}
+	  					
 					})
 			}
 			else{
@@ -103,8 +164,10 @@ module.exports = {
 				project2Time.save(function(err,res){
 					if (err) 
 						console.log(err.message);
-					else
-	  					console.log('timEntry save!');
+					else{
+						console.log('timEntry save!');
+					}
+	  					
 				})
 				
 			}

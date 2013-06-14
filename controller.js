@@ -28,10 +28,13 @@ module.exports = {
 							clientID = parseInt(clients[i]['client_id'][0]);
 							project['client_id'] = clientID;
 							self._checkProjectExists(project,function(projData){
-								projData['hours'] = project.hours;
-								projData['workDescription'] = project.workDescription;
-								projData['ID'] = project.id;
-								self._timeEntry(projData);
+								if(project.timeEntryType ){
+									projData['hours'] = project.hours;
+									projData['workDescription'] = project.workDescription;
+									projData['ID'] = project.id;
+									self._timeEntry(projData);
+								}
+								
 							})
 							
 						}
@@ -44,9 +47,12 @@ module.exports = {
 			   			clientID = parseInt(newClient['response']['client_id'][0]);
 			   			project['client_id'] = clientID;
 			   			self._checkProjectExists(project,function(projData){
-			   					projData['hours'] = project.hours;
-								projData['workDescription'] = project.workDescription;
-								self._timeEntry(projData);
+			   					if(project.timeEntryType){
+									projData['hours'] = project.hours;
+									projData['workDescription'] = project.workDescription;
+									projData['ID'] = project.id;
+									self._timeEntry(projData);
+								}
 			   			})
 
 			   		})
@@ -77,6 +83,9 @@ module.exports = {
 					console.log('new')
 					fb.createProject(data,function(xml){
 						parser.parseString(xml, function (err, result) {
+							var project_id = result.response.project_id;
+						
+							checkData.project_id = project_id;
 							cb(checkData);
 						})
 					})
@@ -143,7 +152,6 @@ module.exports = {
 	_createNewTask:function(data, cb){
 		fb.createTask(data,function(xml){
 			parser.parseString(xml, function (err, result) {
-				console.log(result)
 			   cb(result['response']['task_id'][0]);
 			})
 		})
@@ -154,9 +162,14 @@ module.exports = {
 				if(err) console.log(err);
 				else
 					{	if(result){
+							console.log(result);
+
 							var time_entry_id = result.response.time_entry_id[0];
 							data.time_entry_id = time_entry_id;
+							console.log(data.ID);
 							events.insertTimeEntry(data);
+							if(data.timeEntryType == 'auto')
+								events.removeAutoTimeEntry(data.ID);
 						}
 						
 					}

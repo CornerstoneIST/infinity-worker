@@ -21,8 +21,11 @@ app.get('/createNewUser', user.userHandle);
 
 var ticketchanged = require('./routes/ticketchanged.js')
 app.get('/ticketchanged', ticketchanged.ticketHandle);
+
 var timeEntry = require('./routes/timeEntry.js')
 app.get('/timeEntry', timeEntry.showTimeEnty);
+app.get('/saveAutoTimeEntry', timeEntry.saveAutoTimeEntry);
+app.get('/getAutoTimeEntry', timeEntry.getAutoTimeEntry);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
