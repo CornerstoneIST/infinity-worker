@@ -136,7 +136,31 @@ module.exports = {
 				
 		})
 	},
+	updateTimeEntry : function(data){
+	Project2Time.findOne({taskID : data.taskID},function (err, doc) {
+			if (err) 
+				console.log(err.message);
+			else
+			if(doc){
+				console.log(doc);
 
+				for(var i =0 ; i < doc.timeEntry.length ; i++ ){
+					if(doc.timeEntry[i].id == data.id){
+						doc.timeEntry[i].hour = data.hour;
+						break;
+					}
+				}
+				doc.save(function(err,res){
+					if (err) 
+						console.log(err.message);
+					else{
+						console.log('timeEntry hour update!');
+					}
+			   })
+				
+			}
+		})
+	},
 	insertTimeEntry:function(data){
 
 		Project2Time.findOne({taskID : data.ID},function (err, doc) {

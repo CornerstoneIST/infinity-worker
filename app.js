@@ -26,6 +26,7 @@ var timeEntry = require('./routes/timeEntry.js')
 app.get('/timeEntry', timeEntry.showTimeEnty);
 app.get('/saveAutoTimeEntry', timeEntry.saveAutoTimeEntry);
 app.get('/getAutoTimeEntry', timeEntry.getAutoTimeEntry);
+app.get('/updateTimeEntry', timeEntry.updateTimeEntry);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));

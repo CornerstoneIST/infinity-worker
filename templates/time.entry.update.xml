@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>  
+<request method="time_entry.update">  
+  <time_entry>  
+    <time_entry_id>{{id}}</time_entry_id>  
+     <hours>{{hour}}</hours>                <!-- (Optional) -->  
+     <notes>{{note}}</notes> <!-- (Optional) -->  
+  </time_entry>  
+</request>  
