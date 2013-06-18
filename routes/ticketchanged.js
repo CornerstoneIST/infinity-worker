@@ -11,14 +11,16 @@ module.exports ={
 		var timeEntryType = req.query.timeEntryType;
 		var startTime = req.query.startTime;
 		var endTime = req.query.endTime;
+		var tagName = req.query.taskName;
 		
+
 		events.findData( tiketData['userEmail'],function(userData){
 			
 			var zdData = userData[0].user[0].zd;
 			var fbData = userData[0].user[0].fb;
 			var tasks = userData[0].tasks;
 			var fields = userData[0].fields;
-			controller.fbInit(fbData);
+			  controller.fbInit(fbData);
 
 			var client = zd.createClient({
 			  username:  zdData.username,
@@ -48,7 +50,9 @@ module.exports ={
 						var customeContractRate = 0;
 						var toggleBreak = false;
 				
+/*
 						var customFields = tiketData['custom_fields'].split(' ');
+
 						for(var i=1; i< customFields.length; i++){
 							for(var j = 0; j < result.custom_fields.length; j++ ){
 								if(customFields[i].indexOf(result.custom_fields[j].id) != -1){
@@ -90,8 +94,15 @@ module.exports ={
 					 	if(taskType == 'reset')
 					 		contractRate = 0;
 					 	if(taskType == 'custom')
-					 		contractRate = customeContractRate;
-
+					 		contractRate = customeContractRate;*/
+		
+					 	for(var i = 0; i< tasks.length; i++){
+					 		if(tasks[i].tagName == tagName){
+								taskName = tasks[i].name;
+								contractRate = tasks[i].rate;
+					 		}
+					 	}
+					 	
 						var orgID = result.organization_id;
 						getOrganization(orgID,function(orgName){
 
@@ -101,7 +112,7 @@ module.exports ={
 									taskName = taskName.length > 42 ? taskName.substring(0,42) + '...#'+id : taskName + ' #' + id ;
 									project['name'] = 'TICKET '+ id +' - ' + tiketData['subject'] ;
 									project['description'] = tiketData['description'] ;
-									project['bill_method'] =  contractType;
+									project['bill_method'] = 'task-rate';// contractType;
 									project['rate'] =  contractRate;
 									project['timeEntryType'] = timeEntryType;
 									if(timeEntryType){
@@ -112,7 +123,7 @@ module.exports ={
 										project['endTime'] = endTime;
 
 									}
-									
+									console.log(project);
 									project['id'] = id;
 									controller.createTask(newClent,project);
 

@@ -146,6 +146,8 @@ module.exports = {
 				for(var i =0 ; i < doc.timeEntry.length ; i++ ){
 					if(doc.timeEntry[i].id == data.id){
 						doc.timeEntry[i].hour = data.hour;
+						doc.timeEntry[i].startTime = data.startTime;
+						doc.timeEntry[i].endTime = data.endTime;
 						break;
 					}
 				}
