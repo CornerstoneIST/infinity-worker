@@ -9,7 +9,9 @@ module.exports ={
 		var hours =  req.query.workHours;
 		var workDescription = req.query.workDescription;
 		var timeEntryType = req.query.timeEntryType;
-
+		var startTime = req.query.startTime;
+		var endTime = req.query.endTime;
+		
 		events.findData( tiketData['userEmail'],function(userData){
 			
 			var zdData = userData[0].user[0].zd;
@@ -106,6 +108,9 @@ module.exports ={
 										project['name_id'] = taskName;
 										project['hours'] = hours;
 										project['workDescription'] = workDescription;
+										project['startTime'] = startTime;
+										project['endTime'] = endTime;
+
 									}
 									
 									project['id'] = id;

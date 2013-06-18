@@ -127,7 +127,6 @@ module.exports = {
 		})
 	},
 	showTimeEnty:function(data,cb){
-		console.log(data);
 		Project2Time.findOne({taskID : data.task_id},function (err, doc) {
 			if(err) console.log(err);
 			else{
@@ -168,7 +167,7 @@ module.exports = {
 				console.log(err.message);
 			else
 			if(doc){
-				doc.timeEntry.unshift({id:data.time_entry_id, notes: data.workDescription, hour:data.hours})
+				doc.timeEntry.unshift({id:data.time_entry_id, notes: data.workDescription, hour:data.hours, startTime: data.startTime, endTime:data.endTime})
 				doc.save(function(err,res){
 					if (err) 
 						console.log(err.message);
@@ -182,7 +181,7 @@ module.exports = {
 
 				var project2Time = new Project2Time({
 					taskID : data.ID,
-					timeEntry:[{id:data.time_entry_id, notes : data.workDescription, hour:data.hours }]
+					timeEntry:[{id:data.time_entry_id, notes : data.workDescription, hour:data.hours, startTime: data.startTime, endTime:data.endTime}]
 				})
 
 				project2Time.save(function(err,res){

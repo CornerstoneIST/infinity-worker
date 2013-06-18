@@ -32,6 +32,8 @@ module.exports = {
 									projData['hours'] = project.hours;
 									projData['workDescription'] = project.workDescription;
 									projData['ID'] = project.id;
+									projData['startTime'] = project.startTime;
+									projData['endTime'] = project.endTime;
 									self._timeEntry(projData);
 								}
 								
@@ -51,6 +53,8 @@ module.exports = {
 									projData['hours'] = project.hours;
 									projData['workDescription'] = project.workDescription;
 									projData['ID'] = project.id;
+									projData['startTime'] = project.startTime;
+									projData['endTime'] = project.endTime;
 									self._timeEntry(projData);
 								}
 			   			})
@@ -162,11 +166,9 @@ module.exports = {
 				if(err) console.log(err);
 				else
 					{	if(result){
-							console.log(result);
-
 							var time_entry_id = result.response.time_entry_id[0];
 							data.time_entry_id = time_entry_id;
-							console.log(data.ID);
+					
 							events.insertTimeEntry(data);
 							if(data.timeEntryType == 'auto')
 								events.removeAutoTimeEntry(data.ID);

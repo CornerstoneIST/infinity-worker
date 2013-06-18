@@ -12,6 +12,7 @@ module.exports ={
 			res.contentType('json');
 			if(workHours){
 				console.log(workHours);
+				console.log(workHours);
 				 res.send(workHours.timeEntry);
 			}
            		
