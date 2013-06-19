@@ -109,21 +109,20 @@ module.exports ={
 							newClent['organization'] = orgName;
 							getClient( result.requester_id, function(){
 								
-									taskName = taskName.length > 42 ? taskName.substring(0,42) + '...#'+id : taskName + ' #' + id ;
-									project['name'] = 'TICKET '+ id +' - ' + tiketData['subject'] ;
+									taskName = taskName.length > 42 ? taskName.substring(0,42) + '...': taskName + ' ';
+									project['projName'] = 'TICKET '+ id +' - ' + tiketData['subject'] ;
 									project['description'] = tiketData['description'] ;
 									project['bill_method'] = 'task-rate';// contractType;
 									project['rate'] =  contractRate;
 									project['timeEntryType'] = timeEntryType;
 									if(timeEntryType){
-										project['name_id'] = taskName;
+										project['name'] = taskName;
 										project['hours'] = hours;
 										project['workDescription'] = workDescription;
 										project['startTime'] = startTime;
 										project['endTime'] = endTime;
 
 									}
-									console.log(project);
 									project['id'] = id;
 									controller.createTask(newClent,project);
 

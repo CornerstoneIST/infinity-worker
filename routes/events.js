@@ -1,6 +1,7 @@
 var mongoose = require('mongoose')
    , User2Task = mongoose.model("User2Task")
    , Project2Time = mongoose.model("Project2Time")
+   , Project2Ticket = mongoose.model("Project2Ticket")
    , AutoTimeEntry = mongoose.model("AutoTimeEntry");
 
 module.exports = {
@@ -73,18 +74,21 @@ module.exports = {
 	},
 
 	insertAutoTimeEntry :function(data){ 
-		console.log(data);
+
 		AutoTimeEntry.findOne({taskID : data.taskID},function (err, doc) {
 			if (err) 
 				console.log(err.message);
 			else
 			if(doc){
 				doc.notes = data.notes;
+				doc.taskName = data.taskName;
 				doc.save(function(err,res){
 					if (err) 
 						console.log(err.message);
-					else
-	  					console.log('update AutoTimeEntry!');
+					else{
+						console.log('update AutoTimeEntry!');
+					}
+	  					
 					})
 			}
 			else{
@@ -92,8 +96,10 @@ module.exports = {
 					autoTimeEntry.save(function(err,res){
 						if (err) 
 							console.log(err.message);
-						else
-		  					console.log('Save new AutoTimeEntry !');
+						else{
+							console.log('Save new AutoTimeEntry !');
+						}
+		  					
 					})
 				}
 		})
@@ -101,21 +107,18 @@ module.exports = {
 	},
 
 	getAutoTimeEntry:function(data, cb){
+		console.log(data);
+		console.log('aaaaaaaaaaaaaaaaaaaaaaa');
 		AutoTimeEntry.findOne({taskID : data.taskID},function (err, doc) {
 			if(err) console.log(err);
 			else{
+				console.log(doc);
 				cb(doc);
 			}
 		})
 	},
 	removeAutoTimeEntry:function(ID){
-		AutoTimeEntry.findOne(function (err, user2Task) {
-			 if (err) 
-				console.log(err.message);
-			else
-				console.log(user2Task);
-		})
-		console.log('asdasdadas '); 
+
 		AutoTimeEntry.findOne({taskID :ID},function (err, doc) {
 			if(err) console.log(err);
 			else{
@@ -126,8 +129,55 @@ module.exports = {
 			
 		})
 	},
-	showTimeEnty:function(data,cb){
-		Project2Time.findOne({taskID : data.task_id},function (err, doc) {
+
+	insertProject:function(data,cb){
+
+		var project2Ticket = new Project2Ticket(data);
+
+		project2Ticket.save(function(err,res){
+			if (err) 
+				console.log(err);
+			else{
+				cb(res);
+				console.log('project saved!');
+			}
+					
+		})
+	},
+	getProjetID:function(id, cb){
+		Project2Ticket.findOne({ticketID : id},function (err, doc) {
+			if (err) 
+				console.log(err.message);
+			else
+			{
+				cb(doc);
+			}
+		})
+	},
+
+	saveTaskID:function(projectId,taskeID){
+		Project2Ticket.findOne({ticketID : projectId},function (err, doc) {
+			if (err) 
+				console.log(err.message);
+			else
+			{
+				console.log(doc);
+				doc.tasks.unshift({ID:taskeID});
+				doc.save(function(err,res){
+					if (err) 
+						console.log(err.message);
+					else{
+						console.log('Save new Task ID');
+					}
+				})
+				//cb(doc);
+			}
+		})
+	},
+
+	showTimeEnty:function(ID,cb){
+
+		Project2Time.findOne({projectID :ID},function (err, doc) {
 			if(err) console.log(err);
 			else{
 				cb(doc);
@@ -164,16 +214,18 @@ module.exports = {
 	},
 	insertTimeEntry:function(data){
 
-		Project2Time.findOne({taskID : data.ID},function (err, doc) {
+		Project2Time.findOne({projectID : data.projectID},function (err, doc) {
 			if (err) 
 				console.log(err.message);
 			else
 			if(doc){
-				doc.timeEntry.unshift({id:data.time_entry_id, notes: data.workDescription, hour:data.hours, startTime: data.startTime, endTime:data.endTime})
+				doc.timeEntry.unshift({id:data.time_entry_id, notes: data.workDescription, hour:data.hour, startTime: data.startTime, endTime:data.endTime, taskId :data.taskId, taskName: data.taskName})
 				doc.save(function(err,res){
 					if (err) 
 						console.log(err.message);
 					else{
+						console.log(res);
+
 						console.log('timeEntry update!');
 					}
 	  					
@@ -182,14 +234,15 @@ module.exports = {
 			else{
 
 				var project2Time = new Project2Time({
-					taskID : data.ID,
-					timeEntry:[{id:data.time_entry_id, notes : data.workDescription, hour:data.hours, startTime: data.startTime, endTime:data.endTime}]
+					projectID : data.projectID,
+					timeEntry:[{id:data.time_entry_id, notes: data.workDescription, hour:data.hour, startTime: data.startTime, endTime:data.endTime, taskId :data.taskId, taskName: data.taskName}]
 				})
 
 				project2Time.save(function(err,res){
 					if (err) 
 						console.log(err.message);
 					else{
+						console.log(res);
 						console.log('timEntry save!');
 					}
 	  					

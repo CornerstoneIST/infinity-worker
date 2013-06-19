@@ -2,15 +2,17 @@
 <request method="project.update">  
   <project>  
    <project_id>{{project_id}}</project_id>  
-   <name>{{name}}</name>  
+   <name>{{projName}}</name>  
     <bill_method>{{bill_method}}</bill_method>  
     <client_id>{{client_id}}</client_id>  
     <rate>{{rate}}</rate>  
-    <description>{{description}}</description>  
-    <tasks>  
-          <task>  
-            <task_id>{{task_id }}</task_id>  
-          </task>  
-    </tasks>   
+    <description>{{description}}</description> 
+     <tasks>  
+      {{#tasksID}}
+      <task>  
+        <task_id>{{ID}}</task_id>  
+      </task>
+      {{/tasksID}}
+    </tasks>
   </project>  
 </request> 

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>  
 <request method="time_entry.create">  
   <time_entry>  
-    <project_id>{{project_id}}</project_id>        <!-- (Required) -->  
-    <task_id>{{task_id}}</task_id>              <!-- (Required) -->  
-    <hours>{{hours}}</hours>                <!-- (Optional) -->  
+    <project_id>{{projectID}}</project_id>        <!-- (Required) -->  
+    <task_id>{{taskId}}</task_id>              <!-- (Required) -->  
+    <hours>{{hour}}</hours>                <!-- (Optional) -->  
     <notes>{{workDescription}}</notes> <!-- (Optional) -->  
   </time_entry>  
 </request>  

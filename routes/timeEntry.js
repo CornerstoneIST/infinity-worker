@@ -8,21 +8,21 @@ var parser = new xml2js.Parser();
 
 module.exports ={
 	showTimeEnty:function(req,res){
-		events.showTimeEnty(req.query,function(workHours){
-			res.contentType('json');
-			if(workHours){
-				console.log(workHours);
-				console.log(workHours);
-				 res.send(workHours.timeEntry);
-			}
-           		
-           	else	
-           		res.send({});
-		});
-		
+		events.getProjetID(req.query.task_id,function(doc){
+			if(doc)
+			events.showTimeEnty(doc.projectID,function(workHours){
+				res.contentType('json');
+				if(workHours){
+					 res.send(workHours.timeEntry);
+				}
+          	 	else	
+           		 res.send({});
+			});
+		})		
 	},
 
 	saveAutoTimeEntry : function(req, res){
+		console.log(req.query);
 		events.insertAutoTimeEntry(req.query);
 	},
 
@@ -30,6 +30,8 @@ module.exports ={
 		events.getAutoTimeEntry(req.query,function(timeEntryData){
 			res.contentType('json');
 			if(timeEntryData){
+				console.log(timeEntryData);
+				console.log('bbbbbbbbbbbb');
 				res.send(timeEntryData)
 			}
 				

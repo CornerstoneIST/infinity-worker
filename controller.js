@@ -29,11 +29,11 @@ module.exports = {
 							project['client_id'] = clientID;
 							self._checkProjectExists(project,function(projData){
 								if(project.timeEntryType ){
-									projData['hours'] = project.hours;
+									projData['hour'] = project.hours;
 									projData['workDescription'] = project.workDescription;
-									projData['ID'] = project.id;
 									projData['startTime'] = project.startTime;
 									projData['endTime'] = project.endTime;
+									projData['taskName'] = project.name;
 									self._timeEntry(projData);
 								}
 								
@@ -50,11 +50,11 @@ module.exports = {
 			   			project['client_id'] = clientID;
 			   			self._checkProjectExists(project,function(projData){
 			   					if(project.timeEntryType){
-									projData['hours'] = project.hours;
+									projData['hour'] = project.hours;
 									projData['workDescription'] = project.workDescription;
-									projData['ID'] = project.id;
 									projData['startTime'] = project.startTime;
 									projData['endTime'] = project.endTime;
+									projData['taskName'] = project.name;
 									self._timeEntry(projData);
 								}
 			   			})
@@ -78,36 +78,39 @@ module.exports = {
 
 	_checkProjectExists:function(data, cb){
 		var self = this; 
-		self._checkTaskExists(data,function(checkData){
-		fb.projectList(data,function(xml){
+		self._createNewTask(data, function(taskID){
+			data.task_id = parseInt(taskID);
+			data.tasksID = [{ID:data.task_id}];
+
+			events.getProjetID(data['id'],function(doc){
+				if(doc){
+					doc.tasks.push({ID:data.task_id});
+					data.tasksID = doc.tasks;
+					data.project_id = doc.projectID;
+						fb.projectUpdate(data,function(xml){
+					 		parser.parseString(xml, function (err, result) {
+					 			console.log('project Update!');
+					 			events.saveTaskID(data['id'], data.task_id);
+					 			cb({ projectID: data.project_id, taskId :data.task_id,ticketID : data['id'] });
+							})
+						})
+						
+				}else{
 			
-			parser.parseString(xml, function (err, result) {
-			 var total = parseInt(result['response']['projects'][0]['$']['total']);
-				if(total == 0){
-					console.log('new')
 					fb.createProject(data,function(xml){
 						parser.parseString(xml, function (err, result) {
+							console.log('new project!');
 							var project_id = result.response.project_id;
-						
-							checkData.project_id = project_id;
-							cb(checkData);
+							events.insertProject({projectID: project_id, ticketID: data['id'], tasks: data.tasksID},function(projectData){
+								cb({ projectID: project_id, taskId :data.task_id, ticketID : data['id'] });
+							});
+								
 						})
 					})
-				}else{
-					console.log('update')
-					var projectID = parseInt(result['response']['projects'][0]['project'][0]['project_id']);
-						data['project_id'] = projectID;
-					 	fb.projectUpdate(data,function(xml){
-					 		parser.parseString(xml, function (err, result) {
-					 			cb(checkData);
-							})
-					 	})
 				}
-
 			})
 
-		})
-			
+			//
 		})
 	},
 	
@@ -125,7 +128,7 @@ module.exports = {
 
 				   		var taskName = '' + tasks[i]['name'];
 				   		var taskID = taskName.substring(taskName.indexOf('#')+1,taskName.length);
-				   		var dataID =  data['name_id'].substring( data['name_id'].indexOf('#')+1, data['name_id'].length);
+				   		//var dataID =  data['name_id'].substring( data['name_id'].indexOf('#')+1, data['name_id'].length);
 
 				   		if(taskID == dataID){
 				   			newTask =false;
@@ -154,12 +157,14 @@ module.exports = {
 	},
 
 	_createNewTask:function(data, cb){
+	
 		fb.createTask(data,function(xml){
 			parser.parseString(xml, function (err, result) {
 			   cb(result['response']['task_id'][0]);
 			})
 		})
 	},
+
 	_timeEntry:function(data){
 		fb.createTimeEntry(data,function(xml){
 			parser.parseString(xml, function (err, result) {
@@ -170,8 +175,7 @@ module.exports = {
 							data.time_entry_id = time_entry_id;
 					
 							events.insertTimeEntry(data);
-							if(data.timeEntryType == 'auto')
-								events.removeAutoTimeEntry(data.ID);
+								events.removeAutoTimeEntry(data.ticketID);
 						}
 						
 					}

@@ -2,8 +2,8 @@ var mongoose = require('mongoose')
   , Schema = mongoose.Schema;
 
  var Project2TimeSchema = new Schema({
-	taskID : {type:String, required:true},
-	timeEntry:[{id:String, notes: String, hour:String, startTime:String, endTime:String}],
+	projectID : {type:String, required:true},
+	timeEntry:[{id:String, notes: String, hour:String, startTime:String, endTime:String, taskId:String,taskName:String}],
 	
 
     //System timestamps of documents
@@ -17,7 +17,8 @@ var mongoose = require('mongoose')
 
   	taskID : {type:String},
   	notes : {type:String},
-  	startTime:{type:String},
+    startTime:{type:String},
+  	taskName:{type:String},
   	
   	updated: {type: Date, default: Date.now},	
   	created: {type: Date, default: Date.now},
