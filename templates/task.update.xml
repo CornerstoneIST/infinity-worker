@@ -5,6 +5,5 @@
     <name>{{name}}</name>     
     <billable>1</billable>      
     <rate>{{rate}}</rate>         
-    <description>{{description}}</description>  
   </task>  
 </request>  

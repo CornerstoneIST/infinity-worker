@@ -27,6 +27,7 @@ app.get('/timeEntry', timeEntry.showTimeEnty);
 app.get('/saveAutoTimeEntry', timeEntry.saveAutoTimeEntry);
 app.get('/getAutoTimeEntry', timeEntry.getAutoTimeEntry);
 app.get('/updateTimeEntry', timeEntry.updateTimeEntry);
+app.get('/updateTaskType', timeEntry.updateTaskType);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));

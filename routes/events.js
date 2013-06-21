@@ -107,8 +107,6 @@ module.exports = {
 	},
 
 	getAutoTimeEntry:function(data, cb){
-		console.log(data);
-		console.log('aaaaaaaaaaaaaaaaaaaaaaa');
 		AutoTimeEntry.findOne({taskID : data.taskID},function (err, doc) {
 			if(err) console.log(err);
 			else{
@@ -186,7 +184,7 @@ module.exports = {
 		})
 	},
 	updateTimeEntry : function(data){
-	Project2Time.findOne({taskID : data.taskID},function (err, doc) {
+		Project2Time.findOne({projectID : data.projectID},function (err, doc) {
 			if (err) 
 				console.log(err.message);
 			else
@@ -195,9 +193,15 @@ module.exports = {
 
 				for(var i =0 ; i < doc.timeEntry.length ; i++ ){
 					if(doc.timeEntry[i].id == data.id){
-						doc.timeEntry[i].hour = data.hour;
-						doc.timeEntry[i].startTime = data.startTime;
-						doc.timeEntry[i].endTime = data.endTime;
+						if(data.hour)
+							doc.timeEntry[i].hour = data.hour;
+						if(data.startTime)
+							doc.timeEntry[i].startTime = data.startTime;
+						if(data.endTime)
+							doc.timeEntry[i].endTime = data.endTime;
+						if(data.taskName)
+							doc.timeEntry[i].taskName = data.taskName;
+						console.log(doc);
 						break;
 					}
 				}
