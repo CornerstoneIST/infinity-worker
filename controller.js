@@ -34,6 +34,7 @@ module.exports = {
 									projData['startTime'] = project.startTime;
 									projData['endTime'] = project.endTime;
 									projData['taskName'] = project.name;
+									projData['date'] = project.date;
 									self._timeEntry(projData);
 								}
 								
@@ -55,6 +56,7 @@ module.exports = {
 									projData['startTime'] = project.startTime;
 									projData['endTime'] = project.endTime;
 									projData['taskName'] = project.name;
+									projData['date'] = project.date;
 									self._timeEntry(projData);
 								}
 			   			})
@@ -166,8 +168,11 @@ module.exports = {
 	},
 
 	_timeEntry:function(data){
+console.log(data)
 		fb.createTimeEntry(data,function(xml){
 			parser.parseString(xml, function (err, result) {
+				console.log(result);
+				console.log('**********');
 				if(err) console.log(err);
 				else
 					{	if(result){

@@ -5,5 +5,6 @@
     <task_id>{{taskId}}</task_id>              <!-- (Required) -->  
     <hours>{{hour}}</hours>                <!-- (Optional) -->  
     <notes>{{workDescription}}</notes> <!-- (Optional) -->  
+    <date>{{date}}</date> 
   </time_entry>  
 </request>  

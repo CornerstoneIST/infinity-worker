@@ -12,6 +12,7 @@ module.exports ={
 		var startTime = req.query.startTime;
 		var endTime = req.query.endTime;
 		var tagName = req.query.taskName;
+		var date = req.query.date;
 		
 
 		events.findData( tiketData['userEmail'],function(userData){
@@ -121,6 +122,7 @@ module.exports ={
 										project['workDescription'] = workDescription;
 										project['startTime'] = startTime;
 										project['endTime'] = endTime;
+										project['date'] = date;
 
 									}
 									project['id'] = id;
