@@ -224,13 +224,12 @@ module.exports = {
 				console.log(err.message);
 			else
 			if(doc){
-				doc.timeEntry.unshift({id:data.time_entry_id, notes: data.workDescription, hour:data.hour, startTime: data.startTime, endTime:data.endTime, taskId :data.taskId, taskName: data.taskName})
+				doc.timeEntry.unshift({id:data.time_entry_id, notes: data.workDescription, hour:data.hour, startTime: data.startTime, endTime:data.endTime, taskId :data.taskId, taskName: data.taskName, date:data.date})
 				doc.save(function(err,res){
 					if (err) 
 						console.log(err.message);
 					else{
 						console.log(res);
-
 						console.log('timeEntry update!');
 					}
 	  					
@@ -240,7 +239,7 @@ module.exports = {
 
 				var project2Time = new Project2Time({
 					projectID : data.projectID,
-					timeEntry:[{id:data.time_entry_id, notes: data.workDescription, hour:data.hour, startTime: data.startTime, endTime:data.endTime, taskId :data.taskId, taskName: data.taskName}]
+					timeEntry:[{id:data.time_entry_id, notes: data.workDescription, hour:data.hour, startTime: data.startTime, endTime:data.endTime, taskId :data.taskId, taskName: data.taskName, date:data.date}]
 				})
 
 				project2Time.save(function(err,res){
