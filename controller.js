@@ -168,11 +168,8 @@ module.exports = {
 	},
 
 	_timeEntry:function(data){
-console.log(data)
 		fb.createTimeEntry(data,function(xml){
 			parser.parseString(xml, function (err, result) {
-				console.log(result);
-				console.log('**********');
 				if(err) console.log(err);
 				else
 					{	if(result){

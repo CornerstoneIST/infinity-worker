@@ -82,6 +82,7 @@ module.exports = {
 			if(doc){
 				doc.notes = data.notes;
 				doc.taskName = data.taskName;
+				doc.date = data.date;
 				doc.save(function(err,res){
 					if (err) 
 						console.log(err.message);
