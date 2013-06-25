@@ -3,27 +3,33 @@ module.exports = {
 		{
 			name: 'Work Type',
 			tagName: 'workType',
-			type: 'list'
+			type: 'list',
+			display: 'show'
+
 		},
 		{
 			name: 'Hour Type',
 			tagName: 'hourType',
-			type: 'list'
+			type: 'list',
+			display: 'show'
 		},
 		{
 			name: 'SLA',
 			tagName: 'sla',
-			type: 'list'
+			type: 'list',
+			display: 'show'
 		},
 		{
 			name: 'Contract Type',
 			tagName: 'contractType',
-			type: 'list'
+			type: 'list',
+			display: 'show'
 		},
 		{
 			name: 'Hourly Staff/Project Rate -or- Fee ',
 			tagName: 'rateType',
-			type: 'input'
+			type: 'input',
+			display: 'hidden'
 		},
 	], 
 	newTasks:[

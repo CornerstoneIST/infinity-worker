@@ -5,6 +5,15 @@ var mongoose = require('mongoose')
    , AutoTimeEntry = mongoose.model("AutoTimeEntry");
 
 module.exports = {
+	removeDataTime :function(){
+		Project2Time.remove(function (err) {
+			 if (err) 
+				console.log(err.message);
+			else
+					console.log('Success!');
+		})
+	},
+
 	insertData: function(data){
 			var user2Task = new User2Task({
 				userName: data.userName,

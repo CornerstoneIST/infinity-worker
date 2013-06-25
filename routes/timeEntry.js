@@ -13,8 +13,6 @@ module.exports ={
 			events.showTimeEnty(doc.projectID,function(workHours){
 				res.contentType('json');
 				if(workHours){
-					console.log(workHours.timeEntry);
-					console.log('aaaaaaaaaaaa');
 					 res.send(workHours.timeEntry);
 				}
           	 	else	

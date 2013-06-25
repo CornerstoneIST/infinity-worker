@@ -1,6 +1,6 @@
 var  http = require('http')
   ,	express = require('express');
- // , events = require('./routes/events.js');
+
 
 // Load configurations
 console.log("[INFO] Reading configurations");
@@ -28,6 +28,9 @@ app.get('/saveAutoTimeEntry', timeEntry.saveAutoTimeEntry);
 app.get('/getAutoTimeEntry', timeEntry.getAutoTimeEntry);
 app.get('/updateTimeEntry', timeEntry.updateTimeEntry);
 app.get('/updateTaskType', timeEntry.updateTaskType);
+
+var customefields = require('./routes/customefields.js')
+app.get('/getcustomefields', customefields.getCustomeFields);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
