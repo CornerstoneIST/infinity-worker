@@ -14,6 +14,7 @@ var fieldsSchama = new Schema({
 	name: {type:String, required:true},
 	tagName: {type:String, required:true},
 	type: {type: String, enum: ['input', 'list']},
+	display:{type: String, enum: ['show', 'hidden']}
 });
 
 var userSchema = new Schema({

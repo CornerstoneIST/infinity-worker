@@ -20,6 +20,7 @@ module.exports ={
 		  			newfields.push({field:fields[i], options: customFieldOptions});
 		  		
 		  	}
+
 		  	res.send(newfields);
 
 		})

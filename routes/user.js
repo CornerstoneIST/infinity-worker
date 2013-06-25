@@ -7,6 +7,7 @@ var events = require('./events.js')
 module.exports ={
 
 	userHandle: function(req,res){
+
 		var dbData = {
 			userName : req.query.userEmail,
 			zd: {
