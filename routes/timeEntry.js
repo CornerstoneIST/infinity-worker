@@ -22,14 +22,50 @@ module.exports ={
 	},
 
 	saveAutoTimeEntry : function(req, res){
-		console.log(req.query);
-		events.insertAutoTimeEntry(req.query);
+		var tags = req.query.fieldsVal.split('/');
+		var fields= [];
+		var data ={
+			userEmail: req.query.userEmail,
+			ticketID: req.query.ticketID,
+			notes: req.query.notes,
+			startTime: req.query.startTime,
+			date: req.query.date
+		};
+		events.findData(req.query.userEmail,function(userData){
+			var tasks = userData[0].tasks
+			
+			for(var i=1; i<tags.length; i++){
+				for(var j=0; j< tasks.length; j++){
+					if(tags[i] == tasks[j].tagName){
+						fields.push({tagName:tags[i], taskName: tasks[j].name});
+						break;
+					}else
+					if(tags[i] == '-'){
+						fields.push({tagName:'1', taskName: '-'});
+						break;
+					}
+					else{
+						fields.push({tagName:tags[i], taskName:'input' });
+						break;
+					}
+
+				}
+			}
+			data.fields = fields;
+			console.log('****************');
+			console.log(data);;
+		})
+	
+		events.insertAutoTimeEntry(data);
 	},
 
 	getAutoTimeEntry : function(req, res){
+		console.log(req.query);
 		events.getAutoTimeEntry(req.query,function(timeEntryData){
 			res.contentType('json');
 			if(timeEntryData){
+				console.log(timeEntryData);
+				console.log('aaaaaaaaaaa');
 				res.send(timeEntryData)
 			}
 				

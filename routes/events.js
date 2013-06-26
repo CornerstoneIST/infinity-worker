@@ -83,23 +83,22 @@ module.exports = {
 	},
 
 	insertAutoTimeEntry :function(data){ 
-
-		AutoTimeEntry.findOne({taskID : data.taskID},function (err, doc) {
+		AutoTimeEntry.findOne({ticketID : data.ticketID},function (err, doc) {
 			if (err) 
 				console.log(err.message);
 			else
 			if(doc){
 				doc.notes = data.notes;
-				doc.taskName = data.taskName;
+				doc.fields = data.fields;
 				doc.date = data.date;
+				doc.userEmail = data.userEmail;
 				doc.save(function(err,res){
 					if (err) 
 						console.log(err.message);
 					else{
 						console.log('update AutoTimeEntry!');
 					}
-	  					
-					})
+				})
 			}
 			else{
 					var autoTimeEntry = new AutoTimeEntry(data);
@@ -109,7 +108,6 @@ module.exports = {
 						else{
 							console.log('Save new AutoTimeEntry !');
 						}
-		  					
 					})
 				}
 		})
@@ -117,10 +115,9 @@ module.exports = {
 	},
 
 	getAutoTimeEntry:function(data, cb){
-		AutoTimeEntry.findOne({taskID : data.taskID},function (err, doc) {
+		AutoTimeEntry.findOne({ticketID : data.ticketID, userEmail:data.userEmail },function (err, doc) {
 			if(err) console.log(err);
 			else{
-				console.log(doc);
 				cb(doc);
 			}
 		})

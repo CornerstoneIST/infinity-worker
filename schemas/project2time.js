@@ -14,11 +14,11 @@ var mongoose = require('mongoose')
  mongoose.model('Project2Time', Project2TimeSchema);
 
   var AutoTimeEntrySchema = new Schema({
-
-  	taskID : {type:String},
+    userEmail: {type:String},
+  	ticketID : {type:String},
   	notes : {type:String},
     startTime:{type:String},
-  	taskName:{type:String},
+  	fields:[{tagName:String, taskName:String}],
   	date:{type:String},
   	updated: {type: Date, default: Date.now},	
   	created: {type: Date, default: Date.now},
