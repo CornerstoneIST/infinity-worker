@@ -13,6 +13,9 @@ module.exports ={
 		var endTime = req.query.endTime;
 		var tagName = req.query.taskName;
 		var date = req.query.date;
+		var taskName = req.query.taskName;
+		var contractRate = req.query.contractRate;
+		var contractType = req.query.contractType;
 		
 
 		events.findData( tiketData['userEmail'],function(userData){
@@ -44,66 +47,6 @@ module.exports ={
 
 					 if(result.assignee_id || req.query['assignee_id']){
 
-					 	var taskName = '';
-					 	var  contractRate = 0;
-						var contractType = '';
-						var taskType = '';
-						var customeContractRate = 0;
-						var toggleBreak = false;
-				
-/*
-						var customFields = tiketData['custom_fields'].split(' ');
-
-						for(var i=1; i< customFields.length; i++){
-							for(var j = 0; j < result.custom_fields.length; j++ ){
-								if(customFields[i].indexOf(result.custom_fields[j].id) != -1){
-									result.custom_fields[j].value = customFields[i+1]
-									
-								}
-							}
-						}
-
-					 	for(var i = 0 ; i < result.custom_fields.length; i++){
-					 		if(toggleBreak)
-					 			break;
-
-					 		if(result.custom_fields[i]['value'] ){
-					 			for(var j = tasks.length - 1; j >= 0; j-- ){
-
-					 				if(result.custom_fields[i]['value'] == tasks[j]['tagName'] ){
-					 					if(tasks[j]['contractType'])
-											contractType = tasks[j]['contractType'];
-
-					 					taskType = (taskType == 'reset' || taskType == 'custom' )?  taskType : tasks[j]['type'];
-
-					 					if( taskType == 'custom' ){
-					 						taskType =  tasks[j]['type'];
-					 						taskName =  tasks[j]['name'];
-					 					}
-										else {
-										
-											taskName += taskName? ' - ' + tasks[j]['name'] : tasks[j]['name'];
-											contractRate += parseInt(tasks[j]['rate'])
-										}
-					 				}
-					 				else customeContractRate = result.custom_fields[i]['value'];
-
-					 			}
-					 		}
-					 	}
-					 	
-					 	if(taskType == 'reset')
-					 		contractRate = 0;
-					 	if(taskType == 'custom')
-					 		contractRate = customeContractRate;*/
-		
-					 	for(var i = 0; i< tasks.length; i++){
-					 		if(tasks[i].tagName == tagName){
-								taskName = tasks[i].name;
-								contractRate = tasks[i].rate;
-					 		}
-					 	}
-					 	
 						var orgID = result.organization_id;
 						getOrganization(orgID,function(orgName){
 
@@ -113,7 +56,7 @@ module.exports ={
 									taskName = taskName.length > 42 ? taskName.substring(0,42) + '...': taskName + ' ';
 									project['projName'] = 'TICKET '+ id +' - ' + tiketData['subject'] ;
 									project['description'] = tiketData['description'] ;
-									project['bill_method'] = 'task-rate';// contractType;
+									project['bill_method'] = contractType;
 									project['rate'] =  contractRate;
 									project['timeEntryType'] = timeEntryType;
 									if(timeEntryType){

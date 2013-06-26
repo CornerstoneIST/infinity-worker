@@ -47,6 +47,7 @@ module.exports = {
 			   
 			   if(total == 0 || createNewClient){
 			   		self._createNewClient(data,function(newClient){
+
 			   			clientID = parseInt(newClient['response']['client_id'][0]);
 			   			project['client_id'] = clientID;
 			   			self._checkProjectExists(project,function(projData){
@@ -71,7 +72,14 @@ module.exports = {
 	_createNewClient : function(data,cb){
 		fb.createClient(data,function(xml){
 			parser.parseString(xml, function (err, result) {
-			    cb(result);
+				if(err) 
+					console.log(err);
+				else{
+					console.log(result);
+		
+					cb(result);
+				}
+			     	
 			 
 			})
 		})
@@ -162,6 +170,8 @@ module.exports = {
 	
 		fb.createTask(data,function(xml){
 			parser.parseString(xml, function (err, result) {
+				if(err) console.log(err);
+					else
 			   cb(result['response']['task_id'][0]);
 			})
 		})
@@ -173,6 +183,7 @@ module.exports = {
 				if(err) console.log(err);
 				else
 					{	if(result){
+						console.log(result);
 							var time_entry_id = result.response.time_entry_id[0];
 							data.time_entry_id = time_entry_id;
 					
