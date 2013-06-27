@@ -19,7 +19,6 @@ var mongoose = require('mongoose')
   	notes : {type:String},
     startTime:{type:String},
   	fields:[{tagName:String, taskName:String}],
-  	date:{type:String},
   	updated: {type: Date, default: Date.now},	
   	created: {type: Date, default: Date.now},
 

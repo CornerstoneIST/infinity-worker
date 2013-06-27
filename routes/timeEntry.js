@@ -44,13 +44,9 @@ module.exports ={
 						fields.push({tagName:'1', taskName: '-'});
 						break;
 					}
-					else{
-						fields.push({tagName:tags[i], taskName:'input' });
-						break;
-					}
-
 				}
 			}
+			fields.push({tagName:tags[tags.length-1], taskName:'input' });
 			data.fields = fields;
 			console.log('****************');
 			console.log(data);;
@@ -70,7 +66,7 @@ module.exports ={
 			}
 				
 			else 
-				res.send({});
+				res.send({startTime:'',notes:''});
 		});
 	},
 	updateTaskType:function(req,res){

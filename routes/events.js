@@ -90,7 +90,6 @@ module.exports = {
 			if(doc){
 				doc.notes = data.notes;
 				doc.fields = data.fields;
-				doc.date = data.date;
 				doc.userEmail = data.userEmail;
 				doc.save(function(err,res){
 					if (err) 
@@ -115,6 +114,13 @@ module.exports = {
 	},
 
 	getAutoTimeEntry:function(data, cb){
+	/*	AutoTimeEntry.remove(function (err) {
+			 if (err) 
+				console.log(err.message);
+			else
+					console.log('Success!');
+		});*/
+
 		AutoTimeEntry.findOne({ticketID : data.ticketID, userEmail:data.userEmail },function (err, doc) {
 			if(err) console.log(err);
 			else{
@@ -124,7 +130,7 @@ module.exports = {
 	},
 	removeAutoTimeEntry:function(ID){
 
-		AutoTimeEntry.findOne({taskID :ID},function (err, doc) {
+		AutoTimeEntry.findOne({ticketID :ID},function (err, doc) {
 			if(err) console.log(err);
 			else{
 				if(doc)
