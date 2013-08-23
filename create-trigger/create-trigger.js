@@ -1,8 +1,9 @@
+//is this method defunct?
 var zd = require('../zd-lib/client'),
     fs = require('fs'),
-    subdomain = 'cornerstoneistsandbox',
-    username  = 'harut.muradyan@simplytech.co',
-    token     = 'DOcSOMIZnuBXKFiTY9HwL0MyQ2TNGNhxLn2UBeTL';
+    subdomain = 'cornerstoneist',
+    username  = 'jpogosyan@cornerstoneist.com',
+    token     = 'lK5fuxstO87o2Hh7ZDW5pdzO56FcdNH6xj6DiDkm';
 
 var client = zd.createClient({
   username:  username,

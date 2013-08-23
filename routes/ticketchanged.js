@@ -16,10 +16,10 @@ module.exports ={
 		var taskName = req.query.taskName;
 		var contractRate = req.query.contractRate;
 		var contractType = req.query.contractType;
-		
+
 
 		events.findData( tiketData['userEmail'],function(userData){
-			
+
 			var zdData = userData[0].user[0].zd;
 			var fbData = userData[0].user[0].fb;
 			var tasks = userData[0].tasks;
@@ -52,9 +52,9 @@ module.exports ={
 
 							newClent['organization'] = orgName;
 							getClient( result.requester_id, function(){
-								
+
 									taskName = taskName.length > 42 ? taskName.substring(0,42) + '...': taskName + ' ';
-									project['projName'] = 'TICKET '+ id +' - ' + tiketData['subject'] ;
+									project['projName'] = id +' - ' + tiketData['subject'] ;
 									project['description'] = tiketData['description'] ;
 									project['bill_method'] = contractType;
 									project['rate'] =  contractRate;
